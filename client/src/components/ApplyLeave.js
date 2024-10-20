@@ -10,6 +10,11 @@ const ApplyLeave = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); // useNavigate hook for navigation
 
+  // Define API base URL based on environment
+  const API_BASE_URL = process.env.NODE_ENV === 'production' 
+    ? 'https://leave-management-system-5wch.onrender.com' 
+    : 'http://localhost:10000';
+
   const validateDateRange = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -35,7 +40,7 @@ const ApplyLeave = () => {
 
     try {
       await axios.post(
-        'http://localhost:10000/api/leaves/apply',
+        `${API_BASE_URL}/api/leaves/apply`, // Use the API base URL
         { leaveType, startDate, endDate, reason },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
@@ -57,8 +62,8 @@ const ApplyLeave = () => {
   return (
     <div className="container">
       <header className="app-header">
-          <h1>Leave Management System</h1>
-        </header>
+        <h1>Leave Management System</h1>
+      </header>
       {/* Navigation Bar */}
       <nav>
         <ul>

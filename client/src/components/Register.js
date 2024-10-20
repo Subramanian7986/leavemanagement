@@ -17,7 +17,9 @@ const Register = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:10000/api/register', { username, email, password, confirmPassword });
+      const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://leave-management-system-5wch.onrender.com' : 'http://localhost:10000';
+
+      const response = await axios.post(`${API_BASE_URL}/api/register`, { username, email, password, confirmPassword });
       setMessage(response.data.message);
 
       // Redirect to login page after successful registration

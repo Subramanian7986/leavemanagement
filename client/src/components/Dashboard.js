@@ -9,11 +9,16 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate(); // useNavigate hook for navigation
 
+  // Define API base URL based on environment
+  const API_BASE_URL = process.env.NODE_ENV === 'production' 
+    ? 'https://leave-management-system-5wch.onrender.com' 
+    : 'http://localhost:10000';
+
   useEffect(() => {
     // Fetch user details
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:10000/api/user/details', {
+        const response = await axios.get(`${API_BASE_URL}/api/user/details`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setUsername(response.data.username);
@@ -26,7 +31,7 @@ const Dashboard = () => {
     // Fetch leave balance
     const fetchBalance = async () => {
       try {
-        const response = await axios.get('http://localhost:10000/api/leaves/balance', {
+        const response = await axios.get(`${API_BASE_URL}/api/leaves/balance`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setBalance(response.data);
@@ -39,7 +44,7 @@ const Dashboard = () => {
     // Fetch leave applications
     const fetchApplications = async () => {
       try {
-        const response = await axios.get('http://localhost:10000/api/leaves/history', {
+        const response = await axios.get(`${API_BASE_URL}/api/leaves/history`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setApplications(response.data);
@@ -64,8 +69,8 @@ const Dashboard = () => {
   return (
     <div className="container">
       <header className="app-header">
-          <h1>Leave Management System</h1>
-        </header>
+        <h1>Leave Management System</h1>
+      </header>
       {/* Navigation Bar */}
       <nav>
         <ul>

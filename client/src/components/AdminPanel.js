@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 
+// Define the API base URL
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+    ? 'https://leave-management-system-5wch.onrender.com' 
+    : 'http://localhost:10000'; 
+
 const AdminPanel = () => {
   const [applications, setApplications] = useState([]);
   const [grantedApplications, setGrantedApplications] = useState([]);
@@ -11,11 +16,11 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const response = await axios.get('http://localhost:10000/api/leaves/all', {
+        const response = await axios.get(`${API_BASE_URL}/api/leaves/all`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         const allApplications = response.data;
-        console.log(allApplications); 
+
         // Split applications into granted and rejected
         const granted = allApplications.filter(app => app.status === 'approved');
         const rejected = allApplications.filter(app => app.status === 'rejected');
@@ -33,9 +38,10 @@ const AdminPanel = () => {
 
   const handleApproval = async (id) => {
     try {
-      await axios.post('http://localhost:10000/api/leaves/approve', { applicationId: id }, {
+      await axios.post(`${API_BASE_URL}/api/leaves/approve`, { applicationId: id }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
+
       // Update application lists
       const updatedApp = applications.find(app => app._id === id);
       setApplications(prevApps => prevApps.map(app => app._id === id ? { ...app, status: 'approved' } : app));
@@ -48,9 +54,10 @@ const AdminPanel = () => {
 
   const handleRejection = async (id) => {
     try {
-      await axios.post('http://localhost:10000/api/leaves/reject', { applicationId: id }, {
+      await axios.post(`${API_BASE_URL}/api/leaves/reject`, { applicationId: id }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
+
       // Update application lists
       const updatedApp = applications.find(app => app._id === id);
       setApplications(prevApps => prevApps.map(app => app._id === id ? { ...app, status: 'rejected' } : app));
@@ -60,6 +67,7 @@ const AdminPanel = () => {
       console.error('Error rejecting leave application:', error);
     }
   };
+
   const handleLogout = () => {
     // Remove token from local storage
     localStorage.removeItem('token');
@@ -70,8 +78,8 @@ const AdminPanel = () => {
   return (
     <div className="container">
       <header className="app-header">
-          <h1>Leave Management System</h1>
-        </header>
+        <h1>Leave Management System</h1>
+      </header>
       <div className="header">
         <h1>Admin Panel</h1>
         {/* Add Logout button */}
@@ -79,12 +87,12 @@ const AdminPanel = () => {
           Logout
         </button>
       </div>
+      
       <h2>Pending Leave Applications</h2>
       <ul>
         {applications.filter(app => app.status === 'pending').map(app => (
           <li key={app._id}>
             <div>
-              {/* Accessing user information from the populated userId */}
               <strong>{app.userId?.username || 'Unknown'}</strong> ({app.userId?.email || 'Unknown'}) 
               has applied for {app.leaveType} leave from {new Date(app.startDate).toDateString()} to {new Date(app.endDate).toDateString()} - Status: {app.status}
             </div>
