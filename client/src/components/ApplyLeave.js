@@ -35,7 +35,7 @@ const ApplyLeave = () => {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/leaves/apply',
+        'http://localhost:10000/api/leaves/apply',
         { leaveType, startDate, endDate, reason },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },

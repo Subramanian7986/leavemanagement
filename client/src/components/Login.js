@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/login', { email, password });
+      const response = await axios.post('http://localhost:10000/api/login', { email, password });
       const { token, role } = response.data;
 
       // Store the token and role in localStorage

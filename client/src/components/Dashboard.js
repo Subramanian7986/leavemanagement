@@ -13,7 +13,7 @@ const Dashboard = () => {
     // Fetch user details
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/user/details', {
+        const response = await axios.get('http://localhost:10000/api/user/details', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setUsername(response.data.username);
@@ -26,7 +26,7 @@ const Dashboard = () => {
     // Fetch leave balance
     const fetchBalance = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/leaves/balance', {
+        const response = await axios.get('http://localhost:10000/api/leaves/balance', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setBalance(response.data);
@@ -39,7 +39,7 @@ const Dashboard = () => {
     // Fetch leave applications
     const fetchApplications = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/leaves/history', {
+        const response = await axios.get('http://localhost:10000/api/leaves/history', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setApplications(response.data);

@@ -11,7 +11,7 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/leaves/all', {
+        const response = await axios.get('http://localhost:10000/api/leaves/all', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         const allApplications = response.data;
@@ -33,7 +33,7 @@ const AdminPanel = () => {
 
   const handleApproval = async (id) => {
     try {
-      await axios.post('http://localhost:5000/api/leaves/approve', { applicationId: id }, {
+      await axios.post('http://localhost:10000/api/leaves/approve', { applicationId: id }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       // Update application lists
@@ -48,7 +48,7 @@ const AdminPanel = () => {
 
   const handleRejection = async (id) => {
     try {
-      await axios.post('http://localhost:5000/api/leaves/reject', { applicationId: id }, {
+      await axios.post('http://localhost:10000/api/leaves/reject', { applicationId: id }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       // Update application lists
