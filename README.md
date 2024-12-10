@@ -35,7 +35,7 @@ A full-stack web application to manage leave requests for organizations! Employe
 
 1. Clone this repository:  
    ```bash  
-   git clone https://github.com/your-repo-url.git  
+   git clone https://github.com/Subramanian7986/leavemanagement.git
    ```  
 
 2. Navigate to the project directory:  
